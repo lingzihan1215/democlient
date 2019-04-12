@@ -6,6 +6,7 @@ import com.netflix.appinfo.LeaseInfo;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.discovery.DefaultEurekaClientConfig;
 import com.netflix.discovery.DiscoveryClient;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -19,8 +20,9 @@ import java.util.Properties;
 
 @Component
 @Lazy(value = false)
+@Slf4j
 public class SysInit implements InitializingBean {
-    private static Logger logger = LoggerFactory.getLogger(SysInit.class);
+
     private DiscoveryClient eurekaClient;
 
     private void initEurekaClient() throws Exception {
@@ -65,8 +67,7 @@ public class SysInit implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        logger.debug("...sdfsdfsdf");
-        System.out.println("sdfsdfsdfsdfsdf");
+        log.debug("开始初始化话eureka client");
         initEurekaClient();
     }
 }
