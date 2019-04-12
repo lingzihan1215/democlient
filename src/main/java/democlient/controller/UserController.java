@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @Slf4j
 public class UserController {
+
     @Autowired
     private EurekaRestTemplate eurekaRestTemplate;
 

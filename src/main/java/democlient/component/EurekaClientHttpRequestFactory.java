@@ -12,8 +12,9 @@ import java.net.URI;
 
 @Component
 public class EurekaClientHttpRequestFactory extends SimpleClientHttpRequestFactory {
+
     @Autowired
-    private SysInit sysInit;
+    private EurekaClientInit eurekaClientInit;
 
     @Override
     public ClientHttpRequest createRequest(URI uri, HttpMethod httpMethod) throws IOException {
@@ -30,7 +31,7 @@ public class EurekaClientHttpRequestFactory extends SimpleClientHttpRequestFacto
     private URI convertToRealUri(URI uri) {
         String serviceId = uri.getHost();
         try {
-            String realHost = sysInit.getRealServerHost(serviceId);
+            String realHost = eurekaClientInit.getRealServerHost(serviceId);
             URI uri2 = new URI(uri.toString().replace("http://" + serviceId, "http://" + realHost));
             return uri2;
         } catch (Exception e) {

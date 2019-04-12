@@ -13,11 +13,10 @@ import java.util.List;
 
 @Component
 public class EurekaRestTemplate {
-    @Autowired
-    private SysInit sysInit;
 
     @Autowired
     private EurekaClientHttpRequestFactory eurekaClientHttpRequestFactory;
+
     @Autowired
     private MyClientHttpRequestInterceptor myClientHttpRequestInterceptor;
 
@@ -26,9 +25,11 @@ public class EurekaRestTemplate {
     public RestTemplate getRestTemplate() {
         if (restTemplate == null) {
             restTemplate = new RestTemplate(eurekaClientHttpRequestFactory);
+
             List<ClientHttpRequestInterceptor> interceptorList = new ArrayList<>();
             interceptorList.add(myClientHttpRequestInterceptor);
             restTemplate.setInterceptors(interceptorList);
+
             List<HttpMessageConverter<?>> list = restTemplate.getMessageConverters();
             for (HttpMessageConverter<?> httpMessageConverter : list) {
                 if (httpMessageConverter instanceof StringHttpMessageConverter) {

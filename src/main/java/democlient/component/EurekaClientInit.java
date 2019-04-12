@@ -21,20 +21,19 @@ import java.util.Properties;
 @Component
 @Lazy(value = false)
 @Slf4j
-public class SysInit implements InitializingBean {
+public class EurekaClientInit implements InitializingBean {
 
     private DiscoveryClient eurekaClient;
 
     private void initEurekaClient() throws Exception {
-
-        Properties properties = new Properties();
-
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("eureka-client.properties");
+        Properties properties = new Properties();
         properties.load(inputStream);
 
         //
         properties.setProperty("eureka.ipAddr", "127.0.0.1");
-        String instanceId = properties.getProperty("eureka.ipAddr") + ":" + properties.getProperty("eureka.ipAddr") + "/" + properties.getProperty("eureka.name");
+        String instanceId = properties.getProperty("eureka.ipAddr") + ":" + properties.getProperty("eureka.ipAddr")
+                + "/" + properties.getProperty("eureka.name");
         properties.setProperty("eureka.instanceId", instanceId);
 
         ConfigurationManager.loadProperties(properties);
@@ -48,7 +47,6 @@ public class SysInit implements InitializingBean {
 
         DefaultEurekaClientConfig clientConfig = new DefaultEurekaClientConfig();
         eurekaClient = new DiscoveryClient(applicationInfoManager, clientConfig);
-
     }
 
 
